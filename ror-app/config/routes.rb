@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users, skip: %i[registrations sessions passwords]
+  devise_scope :user do
+    post 'users/sign_up', to: 'users/registrations#create'
+    post 'users/sign_in', to: 'users/sessions#create'
+    delete 'userse/sign_out', to: 'users/sessions#destroy'
+  end
+  
 end
