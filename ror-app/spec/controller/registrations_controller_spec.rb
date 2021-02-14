@@ -21,6 +21,18 @@ describe Users::RegistrationsController, type: :request do
     it 'returns the user email' do
       expect(JSON.parse(response.body)['user']['email']).to eq user.email
     end
+
+    it 'creating same user returns 400' do
+      post signup_url, params: {
+        user: {
+          email: user.email,
+          password: user.password
+        }
+      }
+
+      expect(response.status).to eq(400)
+    end
+
   end
 
 end
