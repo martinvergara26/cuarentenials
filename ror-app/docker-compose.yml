@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+  db:
+    image: mysql:8.0.21
+    command: "--default-authentication-plugin=mysql_native_password"
+    restart: "no"
+    volumes:
+      - ./mysql_data/:/var/lib/mysq
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqlpass
+    ports:
+    - "3306:3306"
+    networks:
+      - cuarentenials
+
+networks:
+  cuarentenials:
+    name: cuarentenials
