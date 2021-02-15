@@ -41,7 +41,7 @@ export default {
           password: this.password
         })
         .then(() => {
-          this.$router.push({ name: 'childs' })
+          this.$router.push({ name: 'births' })
         })
         .catch(err => {
           this.error = err.response.data.message
