@@ -44,7 +44,7 @@ export default {
           this.$router.push({ name: 'births' })
         })
         .catch(err => {
-          this.error = err.response.data.message
+          this.error = err.response.data.error
         })
     }
   }
