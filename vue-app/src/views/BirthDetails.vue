@@ -9,8 +9,8 @@
         <th>Regalo</th>
         <th>Acciones</th>
       </tr>
-      <tr>
-        <td>Alfombra</td>
+      <tr v-for="gift in birth.phase.gifts" :key="gift.id">
+        <td>{{ gift.name }}</td>
         <td>Regalar!</td>
       </tr>
     </table> 
@@ -30,7 +30,11 @@ export default {
   props: ['id'],
   data() {
     return {
-      birth: {}
+      birth: {
+        phase: {
+          gifts: []
+        }
+      }
     }
   },
   computed: {
@@ -38,8 +42,8 @@ export default {
   },
   created() {
     BirthService.getBirth(this.id)
-      .then(response => {
-        this.birth = response.data
+      .then(({data}) => {
+        this.birth = data
       })
       .catch(error => {
         console.log(error.response)
