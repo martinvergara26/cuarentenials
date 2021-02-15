@@ -8,7 +8,19 @@ FactoryBot.find_definitions
 @phase_3 = Phase.create(name: 'Fase 3')
 @phase_4 = Phase.create(name: 'Fase 4')
 
-10.times { FactoryBot.create(:birth, phase: @phase_1) }
-10.times { FactoryBot.create(:birth, phase: @phase_2) }
-10.times { FactoryBot.create(:birth, phase: @phase_3) }
-10.times { FactoryBot.create(:birth, phase: @phase_4) }
+5.times { 
+    @user = FactoryBot.create(:user, password: '123456')
+    FactoryBot.create(:birth, user: @user, phase: @phase_1) 
+}
+5.times { 
+    @user = FactoryBot.create(:user, password: '123456')
+    FactoryBot.create(:birth, user: @user, phase: @phase_2) 
+}
+5.times { 
+    @user = FactoryBot.create(:user, password: '123456')
+    FactoryBot.create(:birth, user: @user, phase: @phase_3) 
+}
+5.times { 
+    @user = FactoryBot.create(:user, password: '123456')
+    FactoryBot.create(:birth, user: @user, phase: @phase_4) 
+}
