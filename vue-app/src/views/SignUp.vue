@@ -11,6 +11,11 @@
       </label>
       <input v-model="password" type="password" name="password" value>
 
+      <label for="isPMC">
+        Soy PMC
+      </label>
+      <input v-model="isPMC" type="checkbox" name="checkbox" value>
+
       <button type="submit" name="button">
         Registrarse
       </button>
@@ -34,6 +39,7 @@ export default {
     return {
       email: '',
       password: '',
+      isPMC: false,
       errors: null
     }
   },
@@ -42,7 +48,8 @@ export default {
       this.$store
         .dispatch('signUp', {
           email: this.email,
-          password: this.password
+          password: this.password,
+          is_pmc: this.isPMC
         })
         .then(() => {
           this.$router.push({ name: 'sign_in' })
