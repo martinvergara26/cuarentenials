@@ -4,6 +4,7 @@ class Birth < ApplicationRecord
 
     has_many :given_gifts
     has_many :gifts, through: :given_gifts
+    has_many :timeslots
 
     belongs_to :phase
     belongs_to :user
