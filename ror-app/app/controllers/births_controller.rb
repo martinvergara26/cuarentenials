@@ -5,7 +5,7 @@ class BirthsController < ApplicationController
   def index
     @births = Birth.all
 
-    render json: @births
+    render :json => @births.to_json(:include => :phase)
   end
 
   # GET /births/1
