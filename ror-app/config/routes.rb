@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resources :gifts
   resources :phases
   resources :births
+
+  resources :given_gifts
+
   devise_for :users, skip: %i[registrations sessions passwords]
   devise_scope :user do
     post 'users/sign_up', to: 'users/registrations#create'
