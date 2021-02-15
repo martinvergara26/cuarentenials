@@ -47,6 +47,9 @@ export default new Vuex.Store({
   getters: {
     loggedIn (state) {
       return !!state.user
+    },
+    isPMC (state) {
+      return state.user.is_pmc
     }
   }
 })
