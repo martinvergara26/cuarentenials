@@ -15,19 +15,26 @@
         <td>Programar interacción</td>
       </tr>
     </table> 
-    <ul>
-    </ul>
+    
+    <button v-if="isPMC" name="button">
+      Dar de alta nacimiento
+    </button>
+
   </div>
 </template>
 
 <script>
 import BirthService from '@/api/BirthService.js'
-    
+import { authComputed } from '@/vuex/helpers.js'
+
 export default {
   data() {
     return {
       births: []
     }
+  },
+  computed: {
+    ...authComputed
   },
   created() {
     BirthService.getBirths()
