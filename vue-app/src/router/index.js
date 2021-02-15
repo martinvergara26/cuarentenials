@@ -3,6 +3,7 @@ import Home from '@/views/Home.vue'
 import SignUp from '@/views/SignUp.vue'
 import SignIn from '@/views/SignIn.vue'
 import BirthList from '@/views/BirthList.vue'
+import BirthDetails from '@/views/BirthDetails.vue'
 
 const routes = [
   {
@@ -14,6 +15,13 @@ const routes = [
     path: '/births',
     name: 'births',
     component: BirthList,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/births/:id',
+    name: 'birth-details',
+    props: true,
+    component: BirthDetails,
     meta: { requiresAuth: true }
   },
   {

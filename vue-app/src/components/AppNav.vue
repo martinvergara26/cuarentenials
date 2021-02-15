@@ -3,7 +3,7 @@
     <router-link to="/">
       Home
     </router-link>
-    <router-link to="/childs">
+    <router-link to="/births">
       Natalicios
     </router-link>
     <button v-if="loggedIn" type="button" class="signOutButton" @click="signOut">

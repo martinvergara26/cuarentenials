@@ -12,7 +12,11 @@
         <td>{{ birth.name }}</td>
         <td>{{ birth.estimated_date }}</td>
         <td>{{ birth.phase.name }}</td>
-        <td>Programar interacción</td>
+        <td>
+          <router-link :to="{ name: 'birth-details', params: { id: birth.id } }">
+            Programar interacción
+          </router-link>
+        </td>
       </tr>
     </table> 
     

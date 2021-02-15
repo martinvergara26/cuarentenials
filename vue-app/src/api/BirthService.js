@@ -5,6 +5,6 @@ export default {
       return client.get('/births')
     },
     getBirth(id) {
-      return client.get(`/events/${id}`)
+      return client.get(`/births/${id}`)
     }
   }
