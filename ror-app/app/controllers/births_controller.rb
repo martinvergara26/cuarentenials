@@ -22,7 +22,7 @@ class BirthsController < ApplicationController
 
   # POST /births
   def create
-    @birth = Birth.new(birth_params)
+    @birth = Birth.new(birth_params.merge(user_id: current_user.id))
 
     if @birth.save
       render json: @birth, status: :created, location: @birth
