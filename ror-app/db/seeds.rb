@@ -1,7 +1,14 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'factory_bot'
+require 'faker'
+
+FactoryBot.find_definitions
+
+@phase_1 = Phase.create(name: 'Fase 1')
+@phase_2 = Phase.create(name: 'Fase 2')
+@phase_3 = Phase.create(name: 'Fase 3')
+@phase_4 = Phase.create(name: 'Fase 4')
+
+10.times { FactoryBot.create(:birth, phase: @phase_1) }
+10.times { FactoryBot.create(:birth, phase: @phase_2) }
+10.times { FactoryBot.create(:birth, phase: @phase_3) }
+10.times { FactoryBot.create(:birth, phase: @phase_4) }
