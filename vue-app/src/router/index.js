@@ -4,6 +4,8 @@ import SignUp from '@/views/SignUp.vue'
 import SignIn from '@/views/SignIn.vue'
 import BirthList from '@/views/BirthList.vue'
 import BirthDetails from '@/views/BirthDetails.vue'
+import MyBirthDetails from '@/views/MyBirthDetails.vue'
+import MyBirthList from '@/views/MyBirthList.vue'
 
 const routes = [
   {
@@ -18,8 +20,21 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/my_births',
+    name: 'my_births',
+    component: MyBirthList,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/my_births/:id',
+    name: 'my_birth_details',
+    props: true,
+    component: MyBirthDetails,
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/births/:id',
-    name: 'birth-details',
+    name: 'birth_details',
     props: true,
     component: BirthDetails,
     meta: { requiresAuth: true }

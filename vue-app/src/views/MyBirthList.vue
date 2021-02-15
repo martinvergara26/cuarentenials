@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Listado de nacimientos</h1>
+    <h1>Mis nacimientos</h1>
      <table style="width:100%">
       <tr>
         <th>Nombre y apellido</th>
@@ -13,23 +13,19 @@
         <td>{{ birth.estimated_date }}</td>
         <td>{{ birth.phase.name }}</td>
         <td>
-          <router-link :to="{ name: 'birth_details', params: { id: birth.id } }">
-            Programar interacción
+          <router-link :to="{ name: 'my_birth_details', params: { id: birth.id } }">
+            Ver detalles
           </router-link>
         </td>
       </tr>
     </table> 
-    
-    <button v-if="isPMC" name="button">
-      Dar de alta nacimiento
-    </button>
 
   </div>
 </template>
 
 <script>
 import BirthService from '@/api/BirthService.js'
-import { authComputed } from '@/vuex/helpers.js'
+
 
 export default {
   data() {
@@ -37,11 +33,8 @@ export default {
       births: []
     }
   },
-  computed: {
-    ...authComputed
-  },
   created() {
-    BirthService.getBirths()
+    BirthService.getMyBirths()
       .then(response => {
         this.births = response.data
       })
