@@ -13,6 +13,13 @@ class BirthsController < ApplicationController
     render :json => @birth.to_json(include: { phase: {include: :gifts} })
   end
 
+  # GET /my_births
+  def my_births
+    @births = Birth.where(user_id: current_user.id)
+
+    render :json => @births.to_json(:include => :phase)
+  end
+
   # POST /births
   def create
     @birth = Birth.new(birth_params)
