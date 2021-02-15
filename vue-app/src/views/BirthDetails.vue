@@ -13,7 +13,7 @@
         <td>{{ gift.name }}</td>
         <td v-if="isAlreadyGiven(gift)">Ya fue regalado</td>
         <td v-else>
-           <button>
+           <button @click="() => addGivenGift(gift)">
             Regalar!
           </button>
         </td>
@@ -47,19 +47,33 @@ export default {
   methods: {
     isAlreadyGiven(gift) {
       return this.givenGifts.some(givenGift => givenGift.id === gift.id)
-    }
-  },
-  computed: {
-    ...authComputed
-  },
-  created() {
-    GivenGiftService.getGivenGifts(this.id)
+    },
+    addGivenGift(gift) {
+      GivenGiftService.postGivenGift(this.id, gift.id)
+      .then(() => {
+        alert(`Felicidades! Regalaste: ${gift.name}`)
+        this.loadGivenGifts()
+      })
+      .catch(error => {
+        console.log(error.response)
+      })
+    },
+    loadGivenGifts() {
+      GivenGiftService.getGivenGifts(this.id)
       .then(({data}) => {
         this.givenGifts = data
       })
       .catch(error => {
         console.log(error.response)
       })
+    }
+  },
+  computed: {
+    ...authComputed
+  },
+  created() {
+    this.loadGivenGifts()
+
     BirthService.getBirth(this.id)
       .then(({data}) => {
         this.birth = data
