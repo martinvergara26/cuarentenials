@@ -16,13 +16,13 @@
         v-model="estimated_date"
       />
 
-      <label for="phase">
+      <label for="phase_id">
         Fase
       </label>
-      <select v-model="phase">
+      <select v-model="phase_id">
         <option disabled value="">Fase</option>
-        <option v-for="phase_option in phases" :key="phase_option.id" :value="phase_option.id">
-          {{ phase_option.name }}
+        <option v-for="phase in phases" :key="phase.id" :value="phase.id">
+          {{ phase.name }}
         </option>
       </select>
 
@@ -50,7 +50,7 @@ export default {
       name: '',
       estimated_date: null,
       phases: [],
-      phase: null,
+      phase_id: null,
       errors: null,
     }
   },
@@ -68,11 +68,11 @@ export default {
       const data = {
         name: this.name,
         estimated_date: this.estimated_date,
-        phase: this.phase
+        phase_id: this.phase_id
       }
       BirthService.createBirth(data)
         .then(() => {
-          alert('Creado!!!!')
+          this.$router.push({ name: 'my_births' })
         })
         .catch(error => {
           console.log(error.response)
