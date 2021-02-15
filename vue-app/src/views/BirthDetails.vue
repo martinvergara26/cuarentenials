@@ -11,7 +11,12 @@
       </tr>
       <tr v-for="gift in birth.phase.gifts" :key="gift.id">
         <td>{{ gift.name }}</td>
-        <td>Regalar!</td>
+        <td v-if="isAlreadyGiven(gift)">Ya fue regalado</td>
+        <td v-else>
+           <button>
+            Regalar!
+          </button>
+        </td>
       </tr>
     </table> 
 
@@ -24,6 +29,7 @@
 
 <script>
 import BirthService from '@/api/BirthService.js'
+import GivenGiftService from '@/api/GivenGiftService.js'
 import { authComputed } from '@/vuex/helpers.js'
 
 export default {
@@ -34,13 +40,26 @@ export default {
         phase: {
           gifts: []
         }
-      }
+      },
+      givenGifts: []
+    }
+  },
+  methods: {
+    isAlreadyGiven(gift) {
+      return this.givenGifts.some(givenGift => givenGift.id === gift.id)
     }
   },
   computed: {
     ...authComputed
   },
   created() {
+    GivenGiftService.getGivenGifts(this.id)
+      .then(({data}) => {
+        this.givenGifts = data
+      })
+      .catch(error => {
+        console.log(error.response)
+      })
     BirthService.getBirth(this.id)
       .then(({data}) => {
         this.birth = data
