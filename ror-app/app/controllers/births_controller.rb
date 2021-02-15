@@ -53,6 +53,6 @@ class BirthsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def birth_params
-      params.require(:birth).permit(:estimated_date, :name)
+      params.require(:birth).permit(:estimated_date, :name, :phase_id)
     end
 end
