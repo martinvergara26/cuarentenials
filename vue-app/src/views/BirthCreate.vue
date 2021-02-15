@@ -21,8 +21,9 @@
       </label>
       <select v-model="phase">
         <option disabled value="">Fase</option>
-        <option>Fase 1</option>
-        <option>Fase 2</option>
+        <option v-for="phase_option in phases" :key="phase_option.id" :value="phase_option.id">
+          {{ phase_option.name }}
+        </option>
       </select>
 
       <button type="submit" name="button">
@@ -41,15 +42,26 @@
 <script>
 import DatePicker from 'vue3-datepicker';
 import BirthService from '@/api/BirthService.js'
+import PhaseService from '@/api/PhaseService.js'
 
 export default {
   data () {
     return {
       name: '',
       estimated_date: null,
+      phases: [],
       phase: null,
       errors: null,
     }
+  },
+  created() {
+    PhaseService.getPhases()
+      .then(({data}) => {
+        this.phases = data
+      })
+      .catch(error => {
+        console.log(error.response)
+      })
   },
   methods: {
     createBirth () {
