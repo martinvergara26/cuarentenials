@@ -12,6 +12,8 @@
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
+    "vue2-datepicker": "3.9.0",
+    "vue3-datepicker": "^0.2.4",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {

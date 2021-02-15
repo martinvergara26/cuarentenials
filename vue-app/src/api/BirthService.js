@@ -9,5 +9,8 @@ export default {
     },
     getBirth(id) {
       return client.get(`/births/${id}`)
+    },
+    createBirth(data) {
+      return client.post('/births', data)
     }
   }

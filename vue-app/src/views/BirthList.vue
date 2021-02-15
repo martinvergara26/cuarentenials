@@ -18,12 +18,13 @@
           </router-link>
         </td>
       </tr>
-    </table> 
-    
-    <button v-if="isPMC" name="button">
-      Dar de alta nacimiento
-    </button>
+    </table>
 
+    <router-link to="/birth_create" v-if="loggedIn && isPMC">
+      <button v-if="isPMC" name="button">
+        Dar de alta nacimiento
+      </button>
+    </router-link>
   </div>
 </template>
 
