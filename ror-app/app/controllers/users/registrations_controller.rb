@@ -11,4 +11,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  private
+
+  def sign_up_params
+    params.require(:user).permit(:email, :password, :is_pmc)
+  end
+
 end
