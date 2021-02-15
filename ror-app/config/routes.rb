@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :gifts
   resources :phases
   resources :births
   devise_for :users, skip: %i[registrations sessions passwords]

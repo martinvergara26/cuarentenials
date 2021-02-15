@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_050424) do
+ActiveRecord::Schema.define(version: 2021_02_15_184133) do
 
   create_table "births", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "estimated_date"
@@ -21,6 +21,25 @@ ActiveRecord::Schema.define(version: 2021_02_15_050424) do
     t.bigint "user_id", null: false
     t.index ["phase_id"], name: "index_births_on_phase_id"
     t.index ["user_id"], name: "index_births_on_user_id"
+  end
+
+  create_table "gifts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "phase_id"
+    t.index ["phase_id"], name: "index_gifts_on_phase_id"
+  end
+
+  create_table "given_gifts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "gift_id", null: false
+    t.bigint "birth_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["birth_id"], name: "index_given_gifts_on_birth_id"
+    t.index ["gift_id"], name: "index_given_gifts_on_gift_id"
+    t.index ["user_id"], name: "index_given_gifts_on_user_id"
   end
 
   create_table "jwt_blacklist", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -52,4 +71,8 @@ ActiveRecord::Schema.define(version: 2021_02_15_050424) do
 
   add_foreign_key "births", "phases"
   add_foreign_key "births", "users"
+  add_foreign_key "gifts", "phases"
+  add_foreign_key "given_gifts", "births"
+  add_foreign_key "given_gifts", "gifts"
+  add_foreign_key "given_gifts", "users"
 end
