@@ -10,7 +10,7 @@ class BirthsController < ApplicationController
 
   # GET /births/1
   def show
-    render json: @birth
+    render :json => @birth.to_json(include: { phase: {include: :gifts} })
   end
 
   # POST /births

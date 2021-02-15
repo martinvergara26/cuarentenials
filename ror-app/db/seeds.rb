@@ -3,37 +3,55 @@ require 'faker'
 
 FactoryBot.find_definitions
 
-@phase_1 = Phase.create(name: 'Fase 1')
-@phase_2 = Phase.create(name: 'Fase 2')
-@phase_3 = Phase.create(name: 'Fase 3')
-@phase_4 = Phase.create(name: 'Fase 4')
+def create_phases
+    @phase_1 = Phase.create(name: 'Fase 1')
+    @phase_2 = Phase.create(name: 'Fase 2')
+    @phase_3 = Phase.create(name: 'Fase 3')
+    @phase_4 = Phase.create(name: 'Fase 4')
+end
 
-5.times { 
-    @user = FactoryBot.create(:user, password: '123456')
-    FactoryBot.create(:birth, user: @user, phase: @phase_1) 
-}
-5.times { 
-    @user = FactoryBot.create(:user, password: '123456')
-    FactoryBot.create(:birth, user: @user, phase: @phase_2) 
-}
-5.times { 
-    @user = FactoryBot.create(:user, password: '123456')
-    FactoryBot.create(:birth, user: @user, phase: @phase_3) 
-}
-5.times { 
-    @user = FactoryBot.create(:user, password: '123456')
-    FactoryBot.create(:birth, user: @user, phase: @phase_4) 
-}
+def create_gifts
+    gifts_phase_1 = ["Una alfombra", "Una sillita de comer", "Un portabebé", "Una suscripción a Disney+"]
+    gifts_phase_2 = gifts_phase_1 + ["Lego for Babies", "Plastilina Acrilex", "Muñeco Centeniial"]
+    gifts_phase_3 = gifts_phase_2 + ["Un cochecito", "Juguete burbujero", "Gift Card de Cheeky", "Sombrero Cool"]
+    gifts_phase_4 = gifts_phase_3 + ["Una visita a una granja", "Vacaiones en Mar del Tuyú", "Obra de teatro al aire libre"]
 
+    gifts_phase_1.each { |gift|
+        Gift.create(name: gift, phase: @phase_1) 
+    }
 
-@user_pmc = User.create(email: 'pmc2@gmail.com', password: '123456', is_pmc: true)
+    gifts_phase_2.each { |gift|
+        Gift.create(name: gift, phase: @phase_2) 
+    }
 
-@phase_prueba = Phase.create(name: 'Fase prueba 2')
+    gifts_phase_3.each { |gift|
+        Gift.create(name: gift, phase: @phase_3) 
+    }
 
-@birth_carlos = Birth.create(name: 'Carlos', phase: @phase_prueba, user: @user_pmc, estimated_date: Faker::Date.forward(days: 50))
+    gifts_phase_4.each { |gift|
+        Gift.create(name: gift, phase: @phase_4) 
+    }
+end
 
-@gift = Gift.create(name: 'Alfajor', phase: @phase_prueba)
+def create_parents_and_births
+    5.times { 
+        @user = FactoryBot.create(:user, password: '123456')
+        FactoryBot.create(:birth, user: @user, phase: @phase_1) 
+    }
+    5.times { 
+        @user = FactoryBot.create(:user, password: '123456')
+        FactoryBot.create(:birth, user: @user, phase: @phase_2) 
+    }
+    5.times { 
+        @user = FactoryBot.create(:user, password: '123456')
+        FactoryBot.create(:birth, user: @user, phase: @phase_3) 
+    }
+    5.times { 
+        @user = FactoryBot.create(:user, password: '123456')
+        FactoryBot.create(:birth, user: @user, phase: @phase_4) 
+    }
+end
 
-@user_vds = User.create(email: 'vds2@gmail.com', password: '123456', is_pmc: false)
-
-@given_gift = GivenGift.create(user: @user_vds, gift: @gift, birth: @birth_carlos)
+create_phases
+create_gifts
+create_parents_and_births
