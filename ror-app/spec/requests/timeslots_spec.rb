@@ -32,6 +32,37 @@ RSpec.describe "/timeslots", type: :request do
     {}
   }
 
+  describe "Get /timeslot" do
+    it "with param available, should render only available" do
+      @phase = FactoryBot.create(:phase)
+      @birth = FactoryBot.create(:birth, phase: @phase)
+
+      @interaction_for_1_person = FactoryBot.create(:interaction, allowed_attendees: 1, phase: @phase, allowed_times_a_day: 5)
+      @interaction_for_2_persons = FactoryBot.create(:interaction, allowed_attendees: 2, phase: @phase, allowed_times_a_day: 5)
+
+      @timeslot_1 = Timeslot.create(from: Date.today, to: Date.today, birth_id: @birth.id, interaction_id: @interaction_for_1_person.id)
+      @timeslot_2 = Timeslot.create(from: Date.today, to: Date.today, birth_id: @birth.id, interaction_id: @interaction_for_2_persons.id)
+
+      @vds_1 = FactoryBot.create(:user, is_pmc: false)
+      @vds_2 = FactoryBot.create(:user, is_pmc: false)
+
+      @timeslot_1_users = TimeslotUser.create(timeslot_id: @timeslot_1.id, user_id: @vds_1.id)
+      @timeslot_2_users = TimeslotUser.create(timeslot_id: @timeslot_2.id, user_id: @vds_2.id)
+
+      @vds_3 = FactoryBot.create(:user, is_pmc: false)
+      sign_in(@vds_3)
+
+      get '/timeslots',
+          params: { birth_id: @birth.id, available:true },
+          headers: valid_headers
+
+      timeslots = JSON.parse(response.body)
+      expect(timeslots.length()).to eq(1)
+
+      expect(timeslots[0]['id']).to eq(@timeslot_2.id)
+    end
+  end
+
   describe "GET /index" do
     it "renders a successful response" do
       Timeslot.create! valid_attributes
@@ -53,13 +84,13 @@ RSpec.describe "/timeslots", type: :request do
       it "creates a new Timeslot" do
         expect {
           post timeslots_url,
-               params: { timeslot: valid_attributes }, headers: valid_headers, as: :json
+               params: {interaction: valid_attributes }, headers: valid_headers, as: :json
         }.to change(Timeslot, :count).by(1)
       end
 
       it "renders a JSON response with the new timeslot" do
         post timeslots_url,
-             params: { timeslot: valid_attributes }, headers: valid_headers, as: :json
+             params: {interaction: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -69,13 +100,13 @@ RSpec.describe "/timeslots", type: :request do
       it "does not create a new Timeslot" do
         expect {
           post timeslots_url,
-               params: { timeslot: invalid_attributes }, as: :json
+               params: {interaction: invalid_attributes }, as: :json
         }.to change(Timeslot, :count).by(0)
       end
 
       it "renders a JSON response with errors for the new timeslot" do
         post timeslots_url,
-             params: { timeslot: invalid_attributes }, headers: valid_headers, as: :json
+             params: {interaction: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq("application/json")
       end
@@ -91,7 +122,7 @@ RSpec.describe "/timeslots", type: :request do
       it "updates the requested timeslot" do
         timeslot = Timeslot.create! valid_attributes
         patch timeslot_url(timeslot),
-              params: { timeslot: new_attributes }, headers: valid_headers, as: :json
+              params: {interaction: new_attributes }, headers: valid_headers, as: :json
         timeslot.reload
         skip("Add assertions for updated state")
       end
@@ -99,7 +130,7 @@ RSpec.describe "/timeslots", type: :request do
       it "renders a JSON response with the timeslot" do
         timeslot = Timeslot.create! valid_attributes
         patch timeslot_url(timeslot),
-              params: { timeslot: new_attributes }, headers: valid_headers, as: :json
+              params: {interaction: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -109,7 +140,7 @@ RSpec.describe "/timeslots", type: :request do
       it "renders a JSON response with errors for the timeslot" do
         timeslot = Timeslot.create! valid_attributes
         patch timeslot_url(timeslot),
-              params: { timeslot: invalid_attributes }, headers: valid_headers, as: :json
+              params: {interaction: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq("application/json")
       end
