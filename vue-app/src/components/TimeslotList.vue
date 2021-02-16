@@ -4,7 +4,7 @@
 
     <ul>
       <li v-for="timeslot in timeslots" :key="timeslot.id">
-        {{ timeslot.from }} -  {{ timeslot.to }}
+        {{ timeslot.from }} hasta {{ timeslot.to }}
       </li>
     </ul>
 
@@ -24,7 +24,13 @@
     created() {
       TimeslotService.get(this.birth_id)
         .then(({data}) => {
-          this.timeslots = data
+          this.timeslots = data.map(
+            timeslot => {
+              timeslot.from = new Date(timeslot.from).toLocaleString()
+              timeslot.to = new Date(timeslot.to).toLocaleString()
+              return timeslot
+            }
+          )
         })
         .catch(error => {
           console.log(error.response)
