@@ -52,6 +52,51 @@ def create_parents_and_births
     }
 end
 
+def create_interactions
+  # Interacciones Fase 1
+  @videollamada = Interaction.create(
+      name: 'Videollamada de hasta 5 personas',
+      allowed_attendees: 5,
+      allowed_times_a_day: 24,
+      csv_not_allowed_days: '',
+      phase: @phase_1
+  )
+
+  # Interacciones Fase 2
+  Interaction.create(@videollamada.attributes.merge({phase: @phase_2, id: nil}))
+  @visita_presencial = Interaction.create(
+      name: 'Visita presencial (del otro lado del vidrio)',
+      allowed_attendees: 1,
+      allowed_times_a_day: 24,
+      csv_not_allowed_days: '',
+      phase: @phase_2
+  )
+
+  # Interacciones Fase 3
+  Interaction.create(@videollamada.attributes.merge({phase: @phase_3, id: nil}))
+  Interaction.create(@visita_presencial.attributes.merge({phase: @phase_3, id: nil}))
+  @vuelta_a_la_plaza = Interaction.create(
+      name: 'Visita presencial (del otro lado del vidrio)',
+      allowed_attendees: 1,
+      allowed_times_a_day: 24,
+      csv_not_allowed_days: '1,2,3,4,5',
+      phase: @phase_3
+  )
+
+  # Interacciones Fase 4
+  Interaction.create(@videollamada.attributes.merge({phase: @phase_4, id: nil}))
+  Interaction.create(@visita_presencial.attributes.merge({phase: @phase_4, id: nil}))
+  Interaction.create(@vuelta_a_la_plaza.attributes.merge({phase: @phase_4, id: nil}))
+  @reunion_diaria = Interaction.create(
+      name: 'Reunión diaria en espacios abiertos. Hasta 10 personas.',
+      allowed_attendees: 10,
+      allowed_times_a_day: 1,
+      csv_not_allowed_days: '',
+      phase: @phase_4
+  )
+end
+
 create_phases
 create_gifts
 create_parents_and_births
+create_interactions
