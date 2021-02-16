@@ -20,11 +20,16 @@ class PhasesController < ApplicationController
     if @phase.save
       begin
         params[:interactions].each { |interaction|
-          Interaction.create(name: interaction['name'], phase_id: @phase.id)
+          Interaction.create(name: interaction['name'],
+                             allowed_attendees: interaction['allowed_attendees'],
+                             allowed_times_a_day: interaction['allowed_times_a_day'],
+                             csv_not_allowed_days: interaction['csv_not_allowed_days'],
+                             phase_id: @phase.id)
         }
       rescue StandardError => e
         @phase.destroy
         render json: @phase.errors, status: :unprocessable_entity
+        return
       end
 
       render json: @phase, status: :created, location: @phase
@@ -57,7 +62,7 @@ class PhasesController < ApplicationController
     def phase_params
       params.require(:phase).permit(
           :name,
-          interactions: %i[name]
+          interactions: %i[name allowed_attendees allowed_times_a_day csv_not_allowed_days]
       )
     end
 end
