@@ -27,6 +27,10 @@ button {
   outline: none;
 }
 
+.warning-button {
+    background: linear-gradient(to right, #c03007, #cf7312);
+}
+
 button:hover {
     cursor: pointer;
 }

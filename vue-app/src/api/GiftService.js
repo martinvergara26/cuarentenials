@@ -6,5 +6,8 @@ export default {
     },
     getGift(id) {
       return client.get(`/gifts/${id}`)
+    },
+    deleteGift(id) {
+      return client.delete(`/gifts/${id}`)
     }
 }

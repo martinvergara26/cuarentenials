@@ -9,8 +9,8 @@
         <th>Regalo</th>
         <th>Acciones</th>
       </tr>
-      <tr v-for="gift in birth.phase.gifts" :key="gift.id">
-        <td>{{ gift.name }}</td>
+      <tr v-for="gift in givenGifts" :key="gift.id">
+        <td>{{ gift.gift.name }}</td>
         <td v-if="isAlreadyGiven(gift)">Ya fue regalado</td>
         <td v-else>
            <button @click="() => addGivenGift(gift)">
@@ -28,7 +28,6 @@
 <script>
 import BirthService from '@/api/BirthService.js'
 import GivenGiftService from '@/api/GivenGiftService.js'
-import { authComputed } from '@/vuex/helpers.js'
 import BirthAvailableTimeslots from "../components/BirthAvailableTimeslots";
 
 export default {
@@ -46,10 +45,10 @@ export default {
   },
   methods: {
     isAlreadyGiven(gift) {
-      return this.givenGifts.some(givenGift => givenGift.gift_id === gift.id)
+      return gift.user_id != null
     },
     addGivenGift(gift) {
-      GivenGiftService.postGivenGift(this.id, gift.id)
+      GivenGiftService.setAsGiven(gift.id)
       .then(() => {
         alert(`Felicidades! Regalaste: ${gift.name}`)
         this.loadGivenGifts()
@@ -67,9 +66,6 @@ export default {
         console.log(error.response)
       })
     }
-  },
-  computed: {
-    ...authComputed
   },
   created() {
     this.loadGivenGifts()

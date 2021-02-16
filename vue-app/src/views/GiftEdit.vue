@@ -4,9 +4,14 @@
 
     <div></div>
 
+    <button class="warning-button" @click="deleteGift">
+      Borrar regalo
+    </button>
+
     <button @click="goToMyBirthDetails">
       Cancelar
     </button>
+
   </div>
 </template>
 
@@ -31,6 +36,15 @@ export default {
       })
   },
   methods: {
+    deleteGift() {
+      GiftService.deleteGift(this.gift_id)
+        .then(() => {
+          this.goToMyBirthDetails()
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+    },
     goToMyBirthDetails() {
       this.$router.push({ name: 'my_birth_details', params: {id: this.birth_id }})
     }

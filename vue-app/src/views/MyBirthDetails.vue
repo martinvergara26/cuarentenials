@@ -10,8 +10,8 @@
         <th>Estado</th>
         <th>Acciones</th>
       </tr>
-      <tr v-for="gift in birth.phase.gifts" :key="gift.id">
-        <td>{{ gift.name }}</td>
+      <tr v-for="gift in givenGifts" :key="gift.id">
+        <td>{{ gift.gift.name }}</td>
         <td class="given-gift" v-if="isAlreadyGiven(gift)">Ya fue regalado!</td>
         <td class="not-given-gift" v-else>-</td>
         <td>
@@ -52,17 +52,7 @@ export default {
   },
   methods: {
     isAlreadyGiven(gift) {
-      return this.givenGifts.some(givenGift => givenGift.gift_id === gift.id)
-    },
-    addGivenGift(gift) {
-      GivenGiftService.postGivenGift(this.id, gift.id)
-      .then(() => {
-        alert(`Felicidades! Regalaste: ${gift.name}`)
-        this.loadGivenGifts()
-      })
-      .catch(error => {
-        console.log(error.response)
-      })
+      return gift.user_id != null
     },
     loadGivenGifts() {
       GivenGiftService.getGivenGifts(this.id)
