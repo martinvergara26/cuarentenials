@@ -61,6 +61,35 @@ RSpec.describe "/timeslots", type: :request do
 
       expect(timeslots[0]['id']).to eq(@timeslot_2.id)
     end
+
+    it "should return only timeslots of given birth" do
+      @phase = FactoryBot.create(:phase)
+      @birth_1 = FactoryBot.create(:birth, phase: @phase)
+      @birth_2 = FactoryBot.create(:birth, phase: @phase)
+
+      @timeslot_birth_1 = Timeslot.create(from: Date.today, to: Date.today, birth_id: @birth_1.id)
+      @timeslot_birth_2 = Timeslot.create(from: Date.today, to: Date.today, birth_id: @birth_2.id)
+
+      @vds = FactoryBot.create(:user, is_pmc: false)
+      sign_in(@vds)
+
+      get '/timeslots',
+          params: { birth_id: @birth_1.id, available:true },
+          headers: valid_headers
+
+      timeslots = JSON.parse(response.body)
+      expect(timeslots.length()).to eq(1)
+      expect(timeslots[0]['id']).to eq(@timeslot_birth_1.id)
+
+      sign_in(@vds)
+      get '/timeslots',
+          params: { birth_id: @birth_2.id, available:true },
+          headers: valid_headers
+
+      timeslots = JSON.parse(response.body)
+      expect(timeslots.length()).to eq(1)
+      expect(timeslots[0]['id']).to eq(@timeslot_birth_2.id)
+    end
   end
 
   describe "GET /index" do
