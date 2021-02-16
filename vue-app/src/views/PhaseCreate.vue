@@ -42,6 +42,18 @@
         </div>
 
       </div>
+
+      <div>
+        <h4>Elegí los regalos para esta fase</h4>
+
+        <select v-model="selectedGifts" :multiple="true">
+          <option v-for="gift in allGifts" :key="gift.id" :value="gift.id">
+            {{ gift.name }}
+          </option>
+        </select>
+
+      </div>
+
       <button type="submit" name="button">
         Crear fase
       </button>
@@ -57,8 +69,18 @@
 
 <script>
 import PhaseService from '@/api/PhaseService.js'
+import GiftService from '@/api/GiftService.js'
 
 export default {
+  created() {
+    GiftService.getAll()
+      .then(({data}) => {
+        this.allGifts = data
+      })
+      .catch(err => {
+        this.errors = [err.response.data.error]
+      })
+  },
   data () {
     return {
       name: '',
@@ -74,6 +96,8 @@ export default {
         5: 'Viernes',
         6: 'Sábado'
       },
+      selectedGifts: [],
+      allGifts: [],
       errors: null
     }
   },
@@ -84,7 +108,8 @@ export default {
     createPhase () {
       const data = {
         name: this.name,
-        interactions: this.adaptInteractions(this.interactions)
+        interactions: this.adaptInteractions(this.interactions),
+        gifts: this.selectedGifts
       }
       PhaseService.create(data)
         .then(() => {
