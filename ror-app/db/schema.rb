@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_194944) do
+ActiveRecord::Schema.define(version: 2021_02_16_231703) do
 
   create_table "births", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "estimated_date"
@@ -32,11 +32,12 @@ ActiveRecord::Schema.define(version: 2021_02_16_194944) do
   end
 
   create_table "given_gifts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "user_id", null: true
+    t.bigint "user_id"
     t.bigint "gift_id", null: false
     t.bigint "birth_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "priority"
     t.index ["birth_id"], name: "index_given_gifts_on_birth_id"
     t.index ["gift_id"], name: "index_given_gifts_on_gift_id"
     t.index ["user_id"], name: "index_given_gifts_on_user_id"
