@@ -35,19 +35,19 @@ end
 
 def create_parents_and_births
     5.times { 
-        @user = FactoryBot.create(:user, password: '123456')
+        @user = FactoryBot.create(:user, password: '123456', is_pmc: true)
         FactoryBot.create(:birth, user: @user, phase: @phase_1) 
     }
     5.times { 
-        @user = FactoryBot.create(:user, password: '123456')
+        @user = FactoryBot.create(:user, password: '123456', is_pmc: true)
         FactoryBot.create(:birth, user: @user, phase: @phase_2) 
     }
     5.times { 
-        @user = FactoryBot.create(:user, password: '123456')
+        @user = FactoryBot.create(:user, password: '123456', is_pmc: true)
         FactoryBot.create(:birth, user: @user, phase: @phase_3) 
     }
     5.times { 
-        @user = FactoryBot.create(:user, password: '123456')
+        @user = FactoryBot.create(:user, password: '123456', is_pmc: true)
         FactoryBot.create(:birth, user: @user, phase: @phase_4) 
     }
 end

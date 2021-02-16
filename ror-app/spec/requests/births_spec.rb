@@ -32,6 +32,28 @@ RSpec.describe "/births", type: :request do
     {}
   }
 
+  describe "GET /my_births" do
+    it "renders only my births" do
+      @pmc_user_1 = FactoryBot.create(:user, is_pmc: true)
+      @pmc_user_2 = FactoryBot.create(:user, is_pmc: true)
+
+      @birth_pmc_1_1 = FactoryBot.create(:birth, user: @pmc_user_1)
+      @birth_pmc_1_2 = FactoryBot.create(:birth, user: @pmc_user_1)
+
+      @birth_pmc_2_1 = FactoryBot.create(:birth, user: @pmc_user_2)
+
+      sign_in(@pmc_user_1)
+
+      get '/my_births', headers: valid_headers, as: :json
+
+      births = JSON.parse(response.body)
+      births.each { |birth|
+        expect(birth['user_id']).to eq(@pmc_user_1.id)
+      }
+    end
+  end
+
+
   describe "GET /index" do
     it "renders a successful response" do
       Birth.create! valid_attributes
