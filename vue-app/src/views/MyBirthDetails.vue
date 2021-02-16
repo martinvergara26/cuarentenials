@@ -8,11 +8,18 @@
       <tr>
         <th>Regalo</th>
         <th>Estado</th>
+        <th>Acciones</th>
       </tr>
       <tr v-for="gift in birth.phase.gifts" :key="gift.id">
         <td>{{ gift.name }}</td>
         <td class="given-gift" v-if="isAlreadyGiven(gift)">Ya fue regalado!</td>
         <td class="not-given-gift" v-else>-</td>
+        <td>
+          <button v-if="!isAlreadyGiven(gift)" @click="() => goToEdit(gift)">
+            Editar
+          </button>
+          <span v-else>-</span>
+        </td>
       </tr>
     </table> 
 
@@ -65,6 +72,9 @@ export default {
       .catch(error => {
         console.log(error.response)
       })
+    },
+    goToEdit(gift) {
+      this.$router.push({ name: 'gift_edit', params: {id: gift.id }})
     }
   },
   computed: {
