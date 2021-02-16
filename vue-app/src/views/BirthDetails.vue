@@ -20,9 +20,7 @@
       </tr>
     </table> 
 
-    <h4>
-      O agendar una call
-    </h4>
+    <BirthAvailableTimeslots :birth_id="id" />
 
   </div>
 </template>
@@ -31,8 +29,10 @@
 import BirthService from '@/api/BirthService.js'
 import GivenGiftService from '@/api/GivenGiftService.js'
 import { authComputed } from '@/vuex/helpers.js'
+import BirthAvailableTimeslots from "../components/BirthAvailableTimeslots";
 
 export default {
+  components: {BirthAvailableTimeslots},
   props: ['id'],
   data() {
     return {

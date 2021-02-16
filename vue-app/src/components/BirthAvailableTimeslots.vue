@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h4>Mis timeslots</h4>
+    <h4>Agendar una interacción</h4>
 
     <ul>
       <li v-for="timeslot in timeslots" :key="timeslot.id">
@@ -22,8 +22,9 @@
       }
     },
     created() {
-      TimeslotService.get(this.birth_id)
+      TimeslotService.getAllAvailable(this.birth_id)
         .then(({data}) => {
+          debugger
           this.timeslots = this.adaptTimeslots(data)
         })
         .catch(error => {
