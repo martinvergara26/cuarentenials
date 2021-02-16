@@ -34,21 +34,37 @@ def create_gifts
 end
 
 def create_parents_and_births
-    5.times { 
+    5.times {
         @user = FactoryBot.create(:user, password: '123456', is_pmc: true)
-        FactoryBot.create(:birth, user: @user, phase: @phase_1) 
+        @birth = FactoryBot.create(:birth, user: @user, phase: @phase_1)
+
+        @phase_1.gifts.each { |gift|
+          GivenGift.create(gift_id: gift.id, birth_id: @birth.id)
+        }
     }
     5.times { 
         @user = FactoryBot.create(:user, password: '123456', is_pmc: true)
-        FactoryBot.create(:birth, user: @user, phase: @phase_2) 
+        @birth = FactoryBot.create(:birth, user: @user, phase: @phase_2)
+
+        @phase_2.gifts.each { |gift|
+          GivenGift.create(gift_id: gift.id, birth_id: @birth.id)
+        }
     }
     5.times { 
         @user = FactoryBot.create(:user, password: '123456', is_pmc: true)
-        FactoryBot.create(:birth, user: @user, phase: @phase_3) 
+        @birth = FactoryBot.create(:birth, user: @user, phase: @phase_3)
+
+        @phase_3.gifts.each { |gift|
+          GivenGift.create(gift_id: gift.id, birth_id: @birth.id)
+        }
     }
     5.times { 
         @user = FactoryBot.create(:user, password: '123456', is_pmc: true)
-        FactoryBot.create(:birth, user: @user, phase: @phase_4) 
+        @birth = FactoryBot.create(:birth, user: @user, phase: @phase_4)
+
+        @phase_4.gifts.each { |gift|
+          GivenGift.create(gift_id: gift.id, birth_id: @birth.id)
+        }
     }
 end
 

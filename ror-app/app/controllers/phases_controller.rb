@@ -27,8 +27,6 @@ class PhasesController < ApplicationController
                              phase_id: @phase.id)
         }
 
-        byebug
-
         params[:gifts].each { |gift_id|
           gift = Gift.find(gift_id)
 
