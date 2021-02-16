@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_010117) do
+ActiveRecord::Schema.define(version: 2021_02_16_010549) do
 
   create_table "births", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "estimated_date"
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_010117) do
     t.integer "allowed_times_a_day", default: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "phase_id", null: false
+    t.index ["phase_id"], name: "index_interactions_on_phase_id"
   end
 
   create_table "jwt_blacklist", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -71,7 +73,9 @@ ActiveRecord::Schema.define(version: 2021_02_16_010117) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "birth_id", null: false
+    t.bigint "interaction_id"
     t.index ["birth_id"], name: "index_timeslots_on_birth_id"
+    t.index ["interaction_id"], name: "index_timeslots_on_interaction_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -93,5 +97,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_010117) do
   add_foreign_key "given_gifts", "births"
   add_foreign_key "given_gifts", "gifts"
   add_foreign_key "given_gifts", "users"
+  add_foreign_key "interactions", "phases"
   add_foreign_key "timeslots", "births"
+  add_foreign_key "timeslots", "interactions"
 end
