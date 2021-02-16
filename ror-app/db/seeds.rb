@@ -76,7 +76,7 @@ def create_interactions
   Interaction.create(@videollamada.attributes.merge({phase: @phase_3, id: nil}))
   Interaction.create(@visita_presencial.attributes.merge({phase: @phase_3, id: nil}))
   @vuelta_a_la_plaza = Interaction.create(
-      name: 'Visita presencial (del otro lado del vidrio)',
+      name: 'Vuelta a la plaza',
       allowed_attendees: 1,
       allowed_times_a_day: 24,
       csv_not_allowed_days: '1,2,3,4,5',

@@ -3,7 +3,11 @@ class InteractionsController < ApplicationController
 
   # GET /interactions
   def index
-    @interactions = Interaction.all
+    if params[:phase_id]
+      @interactions = Interaction.where(phase_id: params[:phase_id])
+    else
+      @interactions = Interaction.all
+    end
 
     render json: @interactions
   end
@@ -46,6 +50,8 @@ class InteractionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def interaction_params
-      params.require(:interaction).permit(:name, :allowed_attendees, :csv_not_allowed_days, :allowed_times_a_day)
+      params.require(:interaction).permit(
+          :name, :allowed_attendees, :csv_not_allowed_days,
+          :allowed_times_a_day, :phase_id)
     end
 end
