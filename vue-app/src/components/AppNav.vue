@@ -6,7 +6,7 @@
     <router-link to="/births">
       Natalicios
     </router-link>
-    <router-link to="/my_births" v-if="loggedIn && isPMC">
+    <router-link id="mi-births-link" to="/my_births" v-if="loggedIn && isPMC">
       Mis nacimientos
     </router-link>
     <button v-if="loggedIn" type="button" class="signOutButton" @click="signOut">
