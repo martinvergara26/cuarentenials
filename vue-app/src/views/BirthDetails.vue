@@ -50,7 +50,7 @@ export default {
     addGivenGift(gift) {
       GivenGiftService.setAsGiven(gift.id)
       .then(() => {
-        alert(`Felicidades! Regalaste: ${gift.name}`)
+        alert(`Felicidades! Regalaste: ${gift.gift.name}`)
         this.loadGivenGifts()
       })
       .catch(error => {

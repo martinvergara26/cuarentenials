@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h4>{{ gift.name }}</h4>
+    <h4>{{ gift.gift.name }}</h4>
 
     <div></div>
 
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import GiftService from '@/api/GiftService.js'
+import GivenGiftService from '@/api/GivenGiftService.js'
 
 
 export default {
@@ -27,8 +27,9 @@ export default {
     }
   },
   created() {
-    GiftService.getGift(this.gift_id)
+    GivenGiftService.get(this.gift_id)
       .then(({data}) => {
+        debugger
         this.gift = data
       })
       .catch(error => {
@@ -37,7 +38,7 @@ export default {
   },
   methods: {
     deleteGift() {
-      GiftService.deleteGift(this.gift_id)
+      GivenGiftService.deleteGivenGift(this.gift_id)
         .then(() => {
           this.goToMyBirthDetails()
         })
