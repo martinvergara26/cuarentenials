@@ -14,7 +14,7 @@ class GivenGiftsController < ApplicationController
 
   # PATCH/PUT /given_gifts/1
   def update
-    if @given_birth.update(given_gift_params.merge(user_id: current_user.id))
+    if @given_gift.update(given_gift_params.merge(user_id: current_user.id))
       render json: @birth
     else
       render json: @birth.errors, status: :unprocessable_entity
@@ -32,10 +32,20 @@ class GivenGiftsController < ApplicationController
     end
   end
 
+  # GET /given_gifts/1
+  def show
+    render :json => @given_gift.to_json(:include => :gift)
+  end
+
+  # DELETE /given_gifts/1
+  def destroy
+    @given_gift.destroy
+  end
+
   private
 
     def set_given_gift
-      @given_birth = GivenGift.find(params[:id])
+      @given_gift = GivenGift.find(params[:id])
     end
 
     def given_gift_params
