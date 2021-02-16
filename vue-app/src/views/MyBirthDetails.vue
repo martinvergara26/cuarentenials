@@ -11,7 +11,9 @@
         <th>Acciones</th>
       </tr>
       <tr v-for="gift in givenGifts" :key="gift.id">
-        <td>{{ gift.gift.name }}</td>
+        <td>{{ gift.gift.name }}
+          <span v-show="gift.priority != null">{{ formatPriority(gift) }}</span>
+        </td>
         <td class="given-gift" v-if="isAlreadyGiven(gift)">Ya fue regalado!</td>
         <td class="not-given-gift" v-else>-</td>
         <td>
@@ -57,7 +59,11 @@ export default {
     loadGivenGifts() {
       GivenGiftService.getGivenGifts(this.id)
       .then(({data}) => {
-        this.givenGifts = data
+        this.givenGifts = data.sort(
+          (gift1, gift2) => {
+            return Math.max(0, gift2.priority) - Math.max(0, gift1.priority)
+          }
+        )
       })
       .catch(error => {
         console.log(error.response)
@@ -65,6 +71,9 @@ export default {
     },
     goToEdit(gift) {
       this.$router.push({ name: 'gift_edit', params: {birth_id: this.id, gift_id: gift.id }})
+    },
+    formatPriority(gift){
+      return `(Prioridad: ${gift.priority})`
     }
   },
   computed: {

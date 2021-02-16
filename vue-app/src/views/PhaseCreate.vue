@@ -11,7 +11,7 @@
       <div>
         <h4>Interacciones</h4>
 
-        <div class="interaction" v-for="(interaction, index) in interactions" :key="index">
+        <div class="container" v-for="(interaction, index) in interactions" :key="index">
           <label>Nombre</label>
           <input v-model="interaction.name"
                  :name="`interactions[${index}][name]`" type="text" placeholder="Visita presencial">
@@ -142,13 +142,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-  .interaction {
-    padding: 1em;
-    margin: 2px;
-    border: 1px solid #16c0b0;
-  }
-
-</style>

@@ -31,6 +31,12 @@ button {
     background: linear-gradient(to right, #c03007, #cf7312);
 }
 
+.container {
+    padding: 1em;
+    margin: 2px;
+    border: 1px solid #16c0b0;
+}
+
 button:hover {
     cursor: pointer;
 }

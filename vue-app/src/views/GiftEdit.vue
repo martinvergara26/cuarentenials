@@ -2,6 +2,20 @@
   <div class="home">
     <h4 v-if="gift != null">{{ gift.gift.name }}</h4>
 
+
+    <div class="container">
+      <form @submit.prevent="assignPriority">
+        <label for="priority">Prioridad</label>
+        <input v-model="priority" :name="priority" type="number"
+               min="1" max="10">
+
+        <button type="submit">
+          Asignar prioridad
+        </button>
+      </form>
+    </div>
+
+
     <button @click="markAsGiven">
       Marcar como regalado
     </button>
@@ -29,7 +43,8 @@ export default {
         gift: {
           name: ""
         }
-      }
+      },
+      priority: 10
     }
   },
   created() {
@@ -53,6 +68,15 @@ export default {
     },
     deleteGift() {
       GivenGiftService.deleteGivenGift(this.gift_id)
+        .then(() => {
+          this.goToMyBirthDetails()
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+    },
+    assignPriority () {
+      GivenGiftService.setPriority(this.gift_id, parseInt(this.priority))
         .then(() => {
           this.goToMyBirthDetails()
         })
