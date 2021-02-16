@@ -8,7 +8,7 @@
         <th>Fase</th>
         <th>Acciones</th>
       </tr>
-      <tr v-for="birth in births" :key="birth.id">
+      <tr class="birth-row" v-for="birth in births" :key="birth.id">
         <td>{{ birth.name }}</td>
         <td>{{ birth.estimated_date }}</td>
         <td>{{ birth.phase.name }}</td>
