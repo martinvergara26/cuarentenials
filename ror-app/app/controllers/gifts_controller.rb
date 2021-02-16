@@ -3,7 +3,7 @@ class GiftsController < ApplicationController
 
   # GET /gifts
   def index
-    @gifts = Gift.all
+    @gifts = Gift.joins(:phase).where(phase: {name: Rails.configuration.PHASE_4_NAME})
 
     render json: @gifts
   end

@@ -26,6 +26,14 @@ class PhasesController < ApplicationController
                              csv_not_allowed_days: interaction['csv_not_allowed_days'],
                              phase_id: @phase.id)
         }
+
+        byebug
+
+        params[:gifts].each { |gift_id|
+          gift = Gift.find(gift_id)
+
+          Gift.create(gift.attributes.merge({phase: @phase, id: nil}))
+        }
       rescue StandardError => e
         @phase.destroy
         render json: @phase.errors, status: :unprocessable_entity
@@ -62,7 +70,8 @@ class PhasesController < ApplicationController
     def phase_params
       params.require(:phase).permit(
           :name,
-          interactions: %i[name allowed_attendees allowed_times_a_day csv_not_allowed_days]
+          interactions: %i[name allowed_attendees allowed_times_a_day csv_not_allowed_days],
+          gifts: %i[id]
       )
     end
 end

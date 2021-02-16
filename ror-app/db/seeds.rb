@@ -7,7 +7,7 @@ def create_phases
     @phase_1 = Phase.create(name: 'Fase 1')
     @phase_2 = Phase.create(name: 'Fase 2')
     @phase_3 = Phase.create(name: 'Fase 3')
-    @phase_4 = Phase.create(name: 'Fase 4')
+    @phase_4 = Phase.create(name: Rails.configuration.PHASE_4_NAME)
 end
 
 def create_gifts
