@@ -1,8 +1,10 @@
 <template>
   <div class="home">
-    <h4>{{ gift.gift.name }}</h4>
+    <h4 v-if="gift != null">{{ gift.gift.name }}</h4>
 
-    <div></div>
+    <button @click="markAsGiven">
+      Marcar como regalado
+    </button>
 
     <button class="warning-button" @click="deleteGift">
       Borrar regalo
@@ -23,13 +25,16 @@ export default {
   props: ['gift_id', 'birth_id'],
   data() {
     return {
-      gift: {}
+      gift: {
+        gift: {
+          name: ""
+        }
+      }
     }
   },
   created() {
     GivenGiftService.get(this.gift_id)
       .then(({data}) => {
-        debugger
         this.gift = data
       })
       .catch(error => {
@@ -37,6 +42,15 @@ export default {
       })
   },
   methods: {
+    markAsGiven() {
+      GivenGiftService.setAsGiven(this.gift_id)
+        .then(() => {
+          this.goToMyBirthDetails()
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+    },
     deleteGift() {
       GivenGiftService.deleteGivenGift(this.gift_id)
         .then(() => {
