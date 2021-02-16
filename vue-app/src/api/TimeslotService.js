@@ -9,5 +9,8 @@ export default {
   },
   createTimeslot(data) {
     return client.post('/timeslots', data)
+  },
+  makeAppointment(timeslot_id, interaction_id) {
+    return client.put(`/timeslots/${timeslot_id}`, {interaction_id})
   }
 }

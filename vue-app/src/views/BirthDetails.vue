@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     isAlreadyGiven(gift) {
-      return this.givenGifts.some(givenGift => givenGift.id === gift.id)
+      return this.givenGifts.some(givenGift => givenGift.gift_id === gift.id)
     },
     addGivenGift(gift) {
       GivenGiftService.postGivenGift(this.id, gift.id)
