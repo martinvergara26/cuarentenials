@@ -81,6 +81,7 @@ export default {
       TimeslotService.createTimeslot(data)
         .then(() => {
           alert('Timeslot creado con éxito')
+          location.reload()
         })
         .catch(error => {
           console.log(error.response)

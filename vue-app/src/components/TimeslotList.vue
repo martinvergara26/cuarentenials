@@ -5,6 +5,7 @@
     <ul>
       <li v-for="timeslot in timeslots" :key="timeslot.id">
         {{ timeslot.from }} hasta {{ timeslot.to }}
+        <span v-if="timeslot.interaction_id"> (Ya está agendado)</span>
       </li>
     </ul>
 
