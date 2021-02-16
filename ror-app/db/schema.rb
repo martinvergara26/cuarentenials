@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_010549) do
+ActiveRecord::Schema.define(version: 2021_02_16_032449) do
 
   create_table "births", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "estimated_date"
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 2021_02_16_010549) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "timeslot_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "timeslot_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["timeslot_id"], name: "index_timeslot_users_on_timeslot_id"
+    t.index ["user_id"], name: "index_timeslot_users_on_user_id"
+  end
+
   create_table "timeslots", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "from"
     t.datetime "to"
@@ -98,6 +107,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_010549) do
   add_foreign_key "given_gifts", "gifts"
   add_foreign_key "given_gifts", "users"
   add_foreign_key "interactions", "phases"
+  add_foreign_key "timeslot_users", "timeslots"
+  add_foreign_key "timeslot_users", "users"
   add_foreign_key "timeslots", "births"
   add_foreign_key "timeslots", "interactions"
 end

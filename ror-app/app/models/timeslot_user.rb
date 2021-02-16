@@ -1,0 +1,2 @@
+class TimeslotUser < ApplicationRecord
+end
