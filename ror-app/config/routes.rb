@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :interactions
   resources :timeslots
   resources :gifts
   resources :phases

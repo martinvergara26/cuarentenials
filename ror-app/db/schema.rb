@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_233321) do
+ActiveRecord::Schema.define(version: 2021_02_16_010117) do
 
   create_table "births", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "estimated_date"
@@ -40,6 +40,15 @@ ActiveRecord::Schema.define(version: 2021_02_15_233321) do
     t.index ["birth_id"], name: "index_given_gifts_on_birth_id"
     t.index ["gift_id"], name: "index_given_gifts_on_gift_id"
     t.index ["user_id"], name: "index_given_gifts_on_user_id"
+  end
+
+  create_table "interactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.integer "allowed_attendees", default: 1
+    t.string "csv_not_allowed_days", default: ""
+    t.integer "allowed_times_a_day", default: 1
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "jwt_blacklist", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
