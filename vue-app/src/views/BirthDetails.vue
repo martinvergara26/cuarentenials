@@ -20,7 +20,7 @@
       </tr>
     </table> 
 
-    <BirthAvailableTimeslots :birth_id="id" />
+    <BirthAvailableTimeslots v-if="birth.phase_id" :birth_id="id" :phase_id="birth.phase_id" />
 
   </div>
 </template>
