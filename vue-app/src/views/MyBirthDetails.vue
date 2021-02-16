@@ -25,9 +25,13 @@
       </tr>
     </table> 
 
-    <TimeslotCreate :birth_id="id" />
+    <div class="container">
+      <TimeslotCreate :birth_id="id" />
+    </div>
 
-    <TimeslotList :birth_id="id" />
+    <div class="container">
+      <TimeslotList :birth_id="id" />
+    </div>
 
   </div>
 </template>

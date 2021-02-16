@@ -1,8 +1,9 @@
 <template>
   <div class="home">
-    <h4>Mis timeslots</h4>
+    <h4 v-if="timeslots.length">Mis timeslots</h4>
+    <h4 v-else>Aún no creaste timeslots</h4>
 
-    <ul>
+    <ul v-if="timeslots.length">
       <li v-for="timeslot in timeslots" :key="timeslot.id">
         {{ timeslot.from }} hasta {{ timeslot.to }}
         <span v-if="timeslot.interaction_id"> (Ya está agendado)</span>
