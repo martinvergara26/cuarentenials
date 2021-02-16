@@ -74,7 +74,7 @@ export default {
       })
     },
     goToEdit(gift) {
-      this.$router.push({ name: 'gift_edit', params: {id: gift.id }})
+      this.$router.push({ name: 'gift_edit', params: {birth_id: this.id, gift_id: gift.id }})
     }
   },
   computed: {

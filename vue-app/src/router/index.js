@@ -8,6 +8,7 @@ import BirthDetails from '@/views/BirthDetails.vue'
 import BirthCreate from '@/views/BirthCreate.vue'
 import MyBirthDetails from '@/views/MyBirthDetails.vue'
 import MyBirthList from '@/views/MyBirthList.vue'
+import GiftEdit from '@/views/GiftEdit.vue'
 
 const routes = [
   {
@@ -44,6 +45,13 @@ const routes = [
     name: 'my_birth_details',
     props: true,
     component: MyBirthDetails,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/my_births/:birth_id/gift/:gift_id/edit',
+    name: 'gift_edit',
+    props: true,
+    component: GiftEdit,
     meta: { requiresAuth: true }
   },
   {
