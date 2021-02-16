@@ -1,6 +1,7 @@
 import MyBirthList from '@/views/MyBirthList'
 import BirthService from '@/api/BirthService.js'
 import flushPromises from 'flush-promises'
+import { mount } from '@vue/test-utils'
 
 jest.mock('@/api/BirthService.js')
 
@@ -37,7 +38,7 @@ describe('MyBirthList', () => {
     expect(BirthService.getMyBirths).toHaveBeenCalledTimes(1)
 
     const birthRows = wrapper.find('.birth-row')
-    expect(birthRows.lenth).toEqual(mockBirths.length)
+    expect(birthRows.length).toEqual(mockBirths.length)
   })
 
 })

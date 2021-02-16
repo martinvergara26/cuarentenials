@@ -11,8 +11,8 @@
       </tr>
       <tr v-for="gift in birth.phase.gifts" :key="gift.id">
         <td>{{ gift.name }}</td>
-        <td v-if="isAlreadyGiven(gift)">Ya fue regalado!</td>
-        <td v-else>-</td>
+        <td class="given-gift" v-if="isAlreadyGiven(gift)">Ya fue regalado!</td>
+        <td class="not-given-gift" v-else>-</td>
       </tr>
     </table> 
 
