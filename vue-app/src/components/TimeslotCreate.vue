@@ -1,30 +1,24 @@
 <template>
   <div class="home">
-    <h4>Dar de alta nacimiento</h4>
+    <h4>Crear un rango de disponibilidad</h4>
     
-    <form @submit.prevent="createBirth">
-      <label for="name">
-        Nombre y apellido
-      </label>
-      <input v-model="name" type="name" name="name" value>
-
-      <label for="estimated_date">
-        Fecha probable
+    <form @submit.prevent="createTimeslot">
+      <label for="timeslot_date">
+        Fecha
       </label>
       <date-picker
-        name="estimated_date"
-        v-model="estimated_date"
+        name="timeslot_date"
+        v-model="timeslot_date"
       />
-
-      <label for="phase_id">
-        Fase
+      <label for="from_time">
+        Desde
       </label>
-      <select v-model="phase_id">
-        <option disabled value="">Fase</option>
-        <option v-for="phase in phases" :key="phase.id" :value="phase.id">
-          {{ phase.name }}
-        </option>
-      </select>
+      <vue-timepicker :hour-range="[[0, 23]]" :minute-interval="30" v-model="from_time"></vue-timepicker>
+
+      <label>
+        Hasta
+      </label>
+      <vue-timepicker :hour-range="[[0, 23]]" :minute-interval="30" v-model="to_time"></vue-timepicker>
 
       <button type="submit" name="button">
         Crear
@@ -41,44 +35,58 @@
 
 <script>
 import DatePicker from 'vue3-datepicker';
-import BirthService from '@/api/BirthService.js'
-import PhaseService from '@/api/PhaseService.js'
+import TimeslotService from '@/api/TimeslotService.js'
+import VueTimepicker from 'vue3-timepicker'
+import 'vue3-timepicker/dist/VueTimepicker.css'
 
 export default {
-  data () {
+  props: ['birth_id'],
+  data() {
     return {
-      name: '',
-      estimated_date: null,
-      phases: [],
-      phase_id: null,
-      errors: null,
+      ...this.initData()
     }
   },
-  created() {
-    PhaseService.getPhases()
-      .then(({data}) => {
-        this.phases = data
-      })
-      .catch(error => {
-        console.log(error.response)
-      })
-  },
   methods: {
-    createBirth () {
-      const data = {
-        name: this.name,
-        estimated_date: this.estimated_date,
-        phase_id: this.phase_id
+    initData() {
+      return {
+        timeslot_date: null,
+        from_time: {
+          hh: '10',
+          mm: '00'
+        },
+        to_time: {
+          HH: '10',
+          mm: '00'
+        },
+        errors: null // TODO puede haber errores por solapamiento
       }
-      BirthService.createBirth(data)
+    },
+    createDateTime(date, timeData) {
+      const createdDate = new Date(date)
+      const hours = parseInt(timeData.HH);
+      createdDate.setHours(hours)
+      const minutes = parseInt(timeData.mm);
+      createdDate.setMinutes(minutes)
+      return createdDate
+    },
+    createTimeslot () {
+      const timeslotFrom = this.createDateTime(this.timeslot_date, this.from_time)
+      const timeslotTo = this.createDateTime(this.timeslot_date, this.to_time)
+
+      const data = {
+        from: timeslotFrom,
+        to: timeslotTo,
+        birth_id: this.birth_id
+      }
+      TimeslotService.createTimeslot(data)
         .then(() => {
-          this.$router.push({ name: 'my_births' })
+          alert('Timeslot creado con éxito')
         })
         .catch(error => {
           console.log(error.response)
         })
     }
   },
-  components: { DatePicker }
+  components: { DatePicker, VueTimepicker }
 }
 </script>
