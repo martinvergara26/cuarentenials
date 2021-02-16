@@ -5,6 +5,9 @@ class TimeslotsController < ApplicationController
   def index
     if params[:birth_id]
       @timeslots = Timeslot.where(birth_id: params[:birth_id])
+      if params[:available]
+        @timeslots = @timeslots.where(interaction_id: nil)
+      end
     else
       @timeslots = Timeslot.all
     end
@@ -50,6 +53,6 @@ class TimeslotsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def timeslot_params
-      params.require(:timeslot).permit(:from, :to, :birth_id)
+      params.require(:timeslot).permit(:from, :to, :birth_id, :available)
     end
 end
