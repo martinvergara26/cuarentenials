@@ -18,6 +18,8 @@
 
     <TimeslotCreate :birth_id="id" />
 
+    <TimeslotList :birth_id="id" />
+
   </div>
 </template>
 
@@ -26,9 +28,10 @@ import BirthService from '@/api/BirthService.js'
 import GivenGiftService from '@/api/GivenGiftService.js'
 import { authComputed } from '@/vuex/helpers.js'
 import TimeslotCreate from "../components/TimeslotCreate";
+import TimeslotList from "../components/TimeslotList";
 
 export default {
-  components: {TimeslotCreate},
+  components: {TimeslotList, TimeslotCreate},
   props: ['id'],
   data() {
     return {

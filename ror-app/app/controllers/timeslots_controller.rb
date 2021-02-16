@@ -3,7 +3,11 @@ class TimeslotsController < ApplicationController
 
   # GET /timeslots
   def index
-    @timeslots = Timeslot.all
+    if params[:birth_id]
+      @timeslots = Timeslot.where(birth_id: params[:birth_id])
+    else
+      @timeslots = Timeslot.all
+    end
 
     render json: @timeslots
   end
