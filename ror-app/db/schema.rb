@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_232828) do
+ActiveRecord::Schema.define(version: 2021_02_15_233321) do
 
   create_table "births", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "estimated_date"
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 2021_02_15_232828) do
     t.datetime "to"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "birth_id", null: false
+    t.index ["birth_id"], name: "index_timeslots_on_birth_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -82,4 +84,5 @@ ActiveRecord::Schema.define(version: 2021_02_15_232828) do
   add_foreign_key "given_gifts", "births"
   add_foreign_key "given_gifts", "gifts"
   add_foreign_key "given_gifts", "users"
+  add_foreign_key "timeslots", "births"
 end

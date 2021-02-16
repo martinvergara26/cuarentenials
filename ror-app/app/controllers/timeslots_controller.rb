@@ -46,6 +46,6 @@ class TimeslotsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def timeslot_params
-      params.require(:timeslot).permit(:from, :to)
+      params.require(:timeslot).permit(:from, :to, :birth_id)
     end
 end
