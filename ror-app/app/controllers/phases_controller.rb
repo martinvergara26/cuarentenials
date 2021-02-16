@@ -3,7 +3,7 @@ class PhasesController < ApplicationController
 
   # GET /phases
   def index
-    @phases = Phase.all
+    @phases = Phase.where(user_id: nil).or(Phase.where(user_id: current_user.id))
 
     render json: @phases
   end
@@ -15,9 +15,18 @@ class PhasesController < ApplicationController
 
   # POST /phases
   def create
-    @phase = Phase.new(phase_params)
+    @phase = Phase.new(phase_params.merge(user_id: current_user.id))
 
     if @phase.save
+      begin
+        params[:interactions].each { |interaction|
+          Interaction.create(name: interaction['name'], phase_id: @phase.id)
+        }
+      rescue StandardError => e
+        @phase.destroy
+        render json: @phase.errors, status: :unprocessable_entity
+      end
+
       render json: @phase, status: :created, location: @phase
     else
       render json: @phase.errors, status: :unprocessable_entity
@@ -46,6 +55,9 @@ class PhasesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def phase_params
-      params.require(:phase).permit(:name)
+      params.require(:phase).permit(
+          :name,
+          interactions: %i[name]
+      )
     end
 end
