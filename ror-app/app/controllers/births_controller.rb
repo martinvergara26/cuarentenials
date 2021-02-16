@@ -25,7 +25,7 @@ class BirthsController < ApplicationController
     @birth = Birth.new(birth_params.merge(user_id: current_user.id))
 
     if @birth.save
-      phase_gifts = Gift.where(phase_id: params[:phase_id])
+      phase_gifts = Gift.where(phase_id: params[:phase_id]).pluck('id')
 
       phase_gifts.each { |gift|
         GivenGift.create(gift_id: gift, birth_id: @birth.id)
