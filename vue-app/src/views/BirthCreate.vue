@@ -26,6 +26,12 @@
         </option>
       </select>
 
+      <div>
+        <button @click="goToPhaseCreate">
+          Crear mi fase personalizada
+        </button>
+      </div>
+
       <button type="submit" name="button">
         Crear
       </button>
@@ -77,6 +83,9 @@ export default {
         .catch(error => {
           console.log(error.response)
         })
+    },
+    goToPhaseCreate() {
+      this.$router.push({ name: 'create_phase' })
     }
   },
   components: { DatePicker }

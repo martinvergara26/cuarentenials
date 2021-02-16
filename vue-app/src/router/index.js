@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from '@/views/Home.vue'
 import SignUp from '@/views/SignUp.vue'
 import SignIn from '@/views/SignIn.vue'
+import PhaseCreate from '@/views/PhaseCreate.vue'
 import BirthList from '@/views/BirthList.vue'
 import BirthDetails from '@/views/BirthDetails.vue'
 import BirthCreate from '@/views/BirthCreate.vue'
@@ -13,6 +14,12 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home
+  },
+  {
+    path: '/create_phase',
+    name: 'create_phase',
+    component: PhaseCreate,
+    meta: { requiresAuth: true }
   },
   {
     path: '/births',
