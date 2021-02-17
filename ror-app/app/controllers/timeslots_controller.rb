@@ -12,10 +12,6 @@ class TimeslotsController < ApplicationController
     if params[:available]
       @available_timeslots = []
 
-      @timeslots = @timeslots
-                       .joins(:interaction)
-                       .where(interaction: {approved: true})
-
       @timeslots.each { |timeslot|
         timeslot_interaction = timeslot.interaction
 
@@ -23,6 +19,10 @@ class TimeslotsController < ApplicationController
           @available_timeslots.append(timeslot)
           next
         else
+          unless timeslot_interaction.approved
+            next
+          end
+
           timeslot_users_records = TimeslotUser.where(timeslot_id: timeslot.id).pluck(:user_id)
           if timeslot_users_records.length() >= timeslot_interaction.allowed_attendees
             next
@@ -42,9 +42,9 @@ class TimeslotsController < ApplicationController
         @available_timeslots.append(timeslot)
       }
 
-      render json: @available_timeslots
+      render :json => @available_timeslots.to_json(:include => :interaction)
     else
-      render json: @timeslots
+      render :json => @timeslots.to_json(:include => :interaction)
     end
 
   end
