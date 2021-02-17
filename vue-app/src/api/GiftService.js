@@ -4,8 +4,8 @@ export default {
     getAll() {
       return client.get('/gifts')
     },
-    getGift(id) {
-      return client.get(`/gifts/${id}`)
+    createCustomGift(data) {
+      return client.post('/create_custom_gift', data)
     },
     deleteGift(id) {
       return client.delete(`/gifts/${id}`)

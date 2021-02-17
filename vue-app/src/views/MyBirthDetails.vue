@@ -23,7 +23,11 @@
           <span v-else>-</span>
         </td>
       </tr>
-    </table> 
+    </table>
+
+    <div class="container">
+      <CustomGiftCreate :birth_id="id" />
+    </div>
 
     <div class="container">
       <TimeslotCreate :birth_id="id" />
@@ -42,9 +46,10 @@ import GivenGiftService from '@/api/GivenGiftService.js'
 import { authComputed } from '@/vuex/helpers.js'
 import TimeslotCreate from "../components/TimeslotCreate";
 import TimeslotList from "../components/TimeslotList";
+import CustomGiftCreate from "../components/CustomGiftCreate";
 
 export default {
-  components: {TimeslotList, TimeslotCreate},
+  components: {CustomGiftCreate, TimeslotList, TimeslotCreate},
   props: ['id'],
   data() {
     return {
