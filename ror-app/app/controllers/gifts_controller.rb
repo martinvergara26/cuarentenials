@@ -24,6 +24,24 @@ class GiftsController < ApplicationController
     end
   end
 
+  # POST /create_custom_gift
+  def create_custom_gift
+    @birth = Birth.find(params[:birth_id])
+    @parent = @birth.user
+
+    approved = current_user.id == @parent.id
+
+    @gift = Gift.new(name: params[:name], user_id: current_user.id, approved: approved)
+
+    if @gift.save
+      GivenGift.create(gift_id: @gift.id, birth_id: @birth.id)
+
+      render json: @gift, status: :created, location: @gift
+    else
+      render json: @gift.errors, status: :unprocessable_entity
+    end
+  end
+
   # PATCH/PUT /gifts/1
   def update
     if @gift.update(gift_params)
@@ -46,6 +64,6 @@ class GiftsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def gift_params
-      params.require(:gift).permit(:name)
+      params.require(:gift).permit(:name, :birth_id)
     end
 end

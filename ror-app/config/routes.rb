@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :interactions
   resources :timeslots
   resources :gifts
+  post 'create_custom_gift', to: 'gifts#create_custom_gift'
   resources :phases
   resources :births
   get 'my_births', to: 'births#my_births'
