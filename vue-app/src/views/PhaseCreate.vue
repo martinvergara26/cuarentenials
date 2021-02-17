@@ -70,6 +70,7 @@
 <script>
 import PhaseService from '@/api/PhaseService.js'
 import GiftService from '@/api/GiftService.js'
+import {adaptInteraction} from '@/util/interactions.js'
 
 export default {
   created() {
@@ -121,15 +122,7 @@ export default {
         })
     },
     adaptInteractions(interactions){
-      return interactions.map(
-        interaction => {
-          const adapatedInteraction = Object.assign({}, interaction)
-          adapatedInteraction.allowed_attendees = parseInt(interaction.allowed_attendees)
-          adapatedInteraction.allowed_times_a_day = parseInt(interaction.allowed_times_a_day)
-          adapatedInteraction.csv_not_allowed_days = interaction.csv_not_allowed_days.join(',')
-          return adapatedInteraction
-        }
-      )
+      return interactions.map(adaptInteraction)
     },
     emptyInteraction() {
      return {

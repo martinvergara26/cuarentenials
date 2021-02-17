@@ -38,6 +38,7 @@ import DatePicker from 'vue3-datepicker';
 import TimeslotService from '@/api/TimeslotService.js'
 import VueTimepicker from 'vue3-timepicker'
 import 'vue3-timepicker/dist/VueTimepicker.css'
+import {createDateTime} from '@/util/datetimes.js'
 
 export default {
   props: ['birth_id'],
@@ -61,17 +62,9 @@ export default {
         errors: null // TODO puede haber errores por solapamiento
       }
     },
-    createDateTime(date, timeData) {
-      const createdDate = new Date(date)
-      const hours = parseInt(timeData.HH);
-      createdDate.setHours(hours)
-      const minutes = parseInt(timeData.mm);
-      createdDate.setMinutes(minutes)
-      return createdDate
-    },
     createTimeslot () {
-      const timeslotFrom = this.createDateTime(this.timeslot_date, this.from_time)
-      const timeslotTo = this.createDateTime(this.timeslot_date, this.to_time)
+      const timeslotFrom = createDateTime(this.timeslot_date, this.from_time)
+      const timeslotTo = createDateTime(this.timeslot_date, this.to_time)
 
       const data = {
         from: timeslotFrom,
