@@ -2,6 +2,14 @@
 # cuarentenials 
 Sistema de gestión de regalos y visitas (Challenge técnico Fullstack)
   
+# Demo
+
+[Deployado en esta EC2](http://3.86.97.120) 
+  
+###	Nota importante
+
+A modo de facilitar la prueba del sistema, en los detalles de un nacimiento, se muestra el email de su PMC. Todos los usuarios generados por los seeds, tiene contraseña `123456`  
+ 
 # Stack tecnológico
 Opté por desarrollar el sistema con las tecnlogías **deseables**:
 Frontend: **Vue.js** (Vue 3)
@@ -38,10 +46,6 @@ de la disponibilidad.
 - [x] Como PMC, tendré una lista de regalos custom
 - [x] Como PMC, puedo ponerle a mis regalos una prioridad/urgencia para que mis VDS se
 concentren en comprar eso.
-
-#	Nota importante
-
-A modo de facilitar la prueba del sistema, en los detalles de un nacimiento, se muestra el email de su PMC. Todos los usuarios generados por los seeds, tiene contraseña `123456`
 
 # DER
 _Nota: este DER no refleja todas las columnas y constraints reales_
