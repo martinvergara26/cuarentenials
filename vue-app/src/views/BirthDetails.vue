@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h4>{{ birth.name }} está por nacer!</h4>
+    <h4>{{ birth.name }} está por nacer! (PMC: {{ birth.user.email }})</h4>
     <div class="container">
       <div>
          Podés regalar alguno de estos disponibles:
@@ -56,6 +56,9 @@ export default {
   data() {
     return {
       birth: {
+        user: {
+          email: "" // Muestro mail para facilitar demo y uso del sistema
+        },
         phase: {
           gifts: []
         }

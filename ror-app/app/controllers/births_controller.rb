@@ -10,7 +10,8 @@ class BirthsController < ApplicationController
 
   # GET /births/1
   def show
-    render :json => @birth.to_json(include: { phase: {include: :gifts} })
+    # Envío user para facilitar demo y uso del sistema
+    render json: @birth.to_json(include: [{phase: {include: :gifts} }, :user])
   end
 
   # GET /my_births
