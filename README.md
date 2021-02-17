@@ -67,19 +67,36 @@ Instalar ruby y rails siguiendo [estas instrucciones](https://gorails.com/setup/
 Luego
 
 `cd cuarentenials/ror-app`
+
 `rake secret`
-En `~/.bashrc` o en `~/.zshrc` (según usemos bash o zsh), agregar al  final esta línea
+
+En `~/.bashrc` o en `~/.zshrc` (según usemos bash o zsh), agregar al  final esta línea:
+
 `export DEVISE_JWT_SECRET_KEY="<clave generada por rake secret>"`
 
 Luego
 
 `bundle exec`
+
 `rake db:create`
+
 `rails db:migrate`
+
 `rails db:seed`
+
 `rails s`
 
 ### Frontend
+
 `cd cuarentenials/vue-app`
+
 `yarn install`
+
 `yarn run serve`
+
+## Opción Docker para Backend
+
+`cd cuarentenials/ror-app`
+
+`docker-compose up -d`
+

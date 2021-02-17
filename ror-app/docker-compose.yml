@@ -1,6 +1,17 @@
 version: '3.5'
 
 services:
+  app:
+    build: .
+    restart: "no"
+    ports:
+      - "3000:3000"
+    command: sh docker_scripts/start_app.sh
+    environment:
+      DEVISE_JWT_SECRET_KEY: 081bfa8ced4bd6fa8f92c18ab503b7644417ce187d1a3e57b6cb850c71d4716bbd2dd6374fc645c5a37ea67a2f8de23701c094dd9690ec6b6c8126fd20745fe2
+    networks:
+      - cuarentenials
+
   db:
     image: mysql:8.0.21
     command: "--default-authentication-plugin=mysql_native_password"
@@ -10,7 +21,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: mysqlpass
     ports:
-    - "3306:3306"
+      - "3306:3306"
     networks:
       - cuarentenials
 
