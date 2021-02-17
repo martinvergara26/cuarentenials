@@ -36,6 +36,10 @@
       <BirthAvailableTimeslots v-if="birth.phase_id" :birth_id="id" :phase_id="birth.phase_id" />
     </div>
 
+    <div class="container">
+      <CustomInteractionCreate :birth_id="id" />
+    </div>
+
   </div>
 </template>
 
@@ -44,9 +48,10 @@ import BirthService from '@/api/BirthService.js'
 import GivenGiftService from '@/api/GivenGiftService.js'
 import BirthAvailableTimeslots from "../components/BirthAvailableTimeslots";
 import CustomGiftCreate from "../components/CustomGiftCreate";
+import CustomInteractionCreate from "../components/CustomInteractionCreate";
 
 export default {
-  components: {CustomGiftCreate, BirthAvailableTimeslots},
+  components: {CustomInteractionCreate, CustomGiftCreate, BirthAvailableTimeslots},
   props: ['id'],
   data() {
     return {
