@@ -14,13 +14,26 @@
         <td>{{ gift.gift.name }}
           <span v-show="gift.priority != null">{{ formatPriority(gift) }}</span>
         </td>
+
         <td class="given-gift" v-if="isAlreadyGiven(gift)">Ya fue regalado!</td>
-        <td class="not-given-gift" v-else>-</td>
+        <td class="not-given-gift" v-else>
+          <span v-if="!gift.gift.approved">Pendiente de aprobación</span>
+        </td>
+
         <td>
-          <button v-if="!isAlreadyGiven(gift)" @click="() => goToEdit(gift)">
-            Editar
-          </button>
-          <span v-else>-</span>
+          <div v-if="!gift.gift.approved">
+            <button @click="() => approve(gift)">
+              Aprobar
+            </button>
+          </div>
+          <div v-else-if="isAlreadyGiven(gift)">
+            <span>-</span>
+          </div>
+          <div v-else>
+            <button  @click="() => goToEdit(gift)">
+              Editar
+            </button>
+          </div>
         </td>
       </tr>
     </table>
@@ -42,6 +55,7 @@
 
 <script>
 import BirthService from '@/api/BirthService.js'
+import GiftService from '@/api/GiftService.js'
 import GivenGiftService from '@/api/GivenGiftService.js'
 import { authComputed } from '@/vuex/helpers.js'
 import TimeslotCreate from "../components/TimeslotCreate";
@@ -83,6 +97,15 @@ export default {
     },
     formatPriority(gift){
       return `(Prioridad: ${gift.priority})`
+    },
+    approve(gift) {
+      GiftService.approve(gift.gift_id)
+        .then(() => {
+          this.givenGifts.find(g => g.id === gift.id).gift.approved = true
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
     }
   },
   computed: {

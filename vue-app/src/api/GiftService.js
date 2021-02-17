@@ -9,5 +9,8 @@ export default {
     },
     deleteGift(id) {
       return client.delete(`/gifts/${id}`)
+    },
+    approve(id) {
+      return client.put(`/gifts/${id}`, {approved: true})
     }
 }
