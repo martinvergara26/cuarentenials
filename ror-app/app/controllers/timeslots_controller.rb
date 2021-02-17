@@ -12,6 +12,9 @@ class TimeslotsController < ApplicationController
     if params[:available]
       @available_timeslots = []
 
+      @timeslots = @timeslots
+                       .joins(:interaction)
+                       .where(interaction: {approved: true})
 
       @timeslots.each { |timeslot|
         timeslot_interaction = timeslot.interaction

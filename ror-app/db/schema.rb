@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2021_02_17_020206) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "phase_id"
-    t.boolean "approved", default: false
+    t.boolean "approved", default: true
     t.bigint "user_id"
     t.index ["phase_id"], name: "index_interactions_on_phase_id"
     t.index ["user_id"], name: "index_interactions_on_user_id"
