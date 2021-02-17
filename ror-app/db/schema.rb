@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_231703) do
+ActiveRecord::Schema.define(version: 2021_02_17_001841) do
 
   create_table "births", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "estimated_date"
@@ -28,7 +28,10 @@ ActiveRecord::Schema.define(version: 2021_02_16_231703) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "phase_id"
+    t.boolean "approved", default: true
+    t.bigint "user_id"
     t.index ["phase_id"], name: "index_gifts_on_phase_id"
+    t.index ["user_id"], name: "index_gifts_on_user_id"
   end
 
   create_table "given_gifts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -106,6 +109,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_231703) do
   add_foreign_key "births", "phases"
   add_foreign_key "births", "users"
   add_foreign_key "gifts", "phases"
+  add_foreign_key "gifts", "users"
   add_foreign_key "given_gifts", "births"
   add_foreign_key "given_gifts", "gifts"
   add_foreign_key "given_gifts", "users"
