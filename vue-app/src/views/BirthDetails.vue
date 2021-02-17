@@ -1,28 +1,40 @@
 <template>
   <div class="home">
     <h4>{{ birth.name }} está por nacer!</h4>
-     <div>
-       Podés regalar alguno de estos disponibles:
-     </div>
-    <table style="width:100%">
-      <tr>
-        <th>Regalo</th>
-        <th>Acciones</th>
-      </tr>
-      <tr v-for="gift in givenGifts" :key="gift.id">
-        <td>{{ gift.gift.name }}
-          <span v-show="gift.priority != null">{{ formatPriority(gift) }}</span>
-        </td>
-        <td v-if="isAlreadyGiven(gift)">Ya fue regalado</td>
-        <td v-else>
-           <button @click="() => addGivenGift(gift)">
-            Regalar!
-          </button>
-        </td>
-      </tr>
-    </table> 
+    <div class="container">
+      <div>
+         Podés regalar alguno de estos disponibles:
+       </div>
+      <table style="width:100%">
+        <tr>
+          <th>Regalo</th>
+          <th>Acciones</th>
+        </tr>
+        <tr v-for="gift in givenGifts" :key="gift.id">
+          <td>{{ gift.gift.name }}
+            <span v-show="gift.priority != null">{{ formatPriority(gift) }}</span>
+          </td>
+          <td v-if="isAlreadyGiven(gift)">Ya fue regalado</td>
+          <td v-else>
+             <button v-if="gift.gift.approved" @click="() => addGivenGift(gift)">
+              Regalar!
+             </button>
+            <span v-else>Pendiente de aprobación</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="container">
+      O solicitá un nuevo regalo:
+      <div>
+        <CustomGiftCreate :birth_id="id" />
+      </div>
+    </div>
 
-    <BirthAvailableTimeslots v-if="birth.phase_id" :birth_id="id" :phase_id="birth.phase_id" />
+    <div class="container">
+      O agendá una interacción:
+      <BirthAvailableTimeslots v-if="birth.phase_id" :birth_id="id" :phase_id="birth.phase_id" />
+    </div>
 
   </div>
 </template>
@@ -31,9 +43,10 @@
 import BirthService from '@/api/BirthService.js'
 import GivenGiftService from '@/api/GivenGiftService.js'
 import BirthAvailableTimeslots from "../components/BirthAvailableTimeslots";
+import CustomGiftCreate from "../components/CustomGiftCreate";
 
 export default {
-  components: {BirthAvailableTimeslots},
+  components: {CustomGiftCreate, BirthAvailableTimeslots},
   props: ['id'],
   data() {
     return {
