@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_17_001841) do
+ActiveRecord::Schema.define(version: 2021_02_17_014741) do
 
   create_table "births", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "estimated_date"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2021_02_17_001841) do
     t.integer "allowed_times_a_day", default: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "phase_id", null: false
+    t.bigint "phase_id"
     t.index ["phase_id"], name: "index_interactions_on_phase_id"
   end
 
