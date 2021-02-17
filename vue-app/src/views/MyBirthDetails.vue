@@ -18,6 +18,7 @@
         <td class="given-gift" v-if="isAlreadyGiven(gift)">Ya fue regalado!</td>
         <td class="not-given-gift" v-else>
           <span v-if="!gift.gift.approved">Pendiente de aprobación</span>
+          <span v-else>A la espera de un regalador</span>
         </td>
 
         <td>
@@ -49,7 +50,6 @@
     <div class="container">
       <TimeslotList :birth_id="id" />
     </div>
-
   </div>
 </template>
 
@@ -72,7 +72,8 @@ export default {
           gifts: []
         }
       },
-      givenGifts: []
+      givenGifts: [],
+      errors: []
     }
   },
   methods: {

@@ -66,7 +66,7 @@
       },
       interactionsOfTimeslot(timeslot){
         if(timeslot.interaction_id){
-          return [this.findInteraction(timeslot.interaction_id)]
+          return [timeslot.interaction]
         } else {
           return this.excludeNotAllowedInteractionsByWeekDay(timeslot)
         }

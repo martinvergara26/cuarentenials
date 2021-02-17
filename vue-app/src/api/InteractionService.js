@@ -6,5 +6,8 @@ export default {
   },
   createCustomInteraction(data) {
     return client.post('/create_custom_interaction', data)
+  },
+  approve(timeslotID) {
+    return client.put(`/interactions/${timeslotID}`, {approved: true})
   }
 }
